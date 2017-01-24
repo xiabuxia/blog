@@ -17,6 +17,8 @@ a{
 	background: #2a2a2a url("bg_vs2.jpg") no-repeat center top; 
 }
 #hander {
+	width: 980px;
+	margin: 0 auto;
 	position: relative;
 }
 #hander .logo {
@@ -28,12 +30,12 @@ a{
 	cursor: pointer;
 }
 .nav {
-	padding-left: 452px;
-	padding-top: 32px;
+	padding-left: 274px;
+	padding-top: 39px;
 }
 .nav dl {
 	float: left;
-	padding-left: 23px;
+	padding-left: 21px;
 	text-align: center;	
 }
 .nav dl dt{
