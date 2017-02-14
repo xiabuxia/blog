@@ -19,6 +19,7 @@ a{
 #hander {
 	width: 980px;
 	margin: 0 auto;
+	text-align: left; 
 	position: relative;
 }
 #hander .logo {
