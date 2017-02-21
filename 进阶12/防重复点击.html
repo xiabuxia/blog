@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>进阶12-3</title>
+  <style type="text/css">
+    #btn {
+      background: #aaa;
+    }
+  </style>
+</head>
+<body>
+  <button id="btn">点我</button>
+  <script type="text/javascript">
+    var btn = document.querySelector('#btn');
+    var loading = false;
+    btn.addEventListener('click',function(){
+       this.style.background = 'pink';
+      if(loading){return;}
+
+      ajax({url:"/comment",
+            type:'get',
+            data:{
+              information:'hello'
+            },
+            success:function(){
+              console.log('1');
+              loading = false
+
+            },
+            error:function(){
+             loading = true
+            }
+          })
+         
+         loading = true;//数据来之前加锁
+         console.log('2');
+    })
+    //根据测试，后台输出顺序是3-2-4-1-5，可见确实会先执行loading=true,结果返回来之后再执行loading=false
+    function ajax(objs){
+      var xhr =new XMLHttpRequest();
+      xhr.open(objs.type,objs.url,true);
+      xhr.send();
+      console.log('3');
+      xhr.onreadystatechange = function(){
+            console.log('4');
+        if(xhr.readyState === 4 && xhr.status === 200){
+            objs.success();
+            console.log('5');
+        }else if (xhr.readystate === 4 && xhr.status ===404){
+            objs.error();
+        }
+      }
+    }
+    
+
+
+
+
+
+  </script>
+  
+</body>
+</html>
