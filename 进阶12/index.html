@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>进阶12-5</title>
+  <style type="text/css">
+    #content {
+      list-style: none;
+    }
+    #content li {
+      width: 1200px;
+      height: 40px;
+      border: 1px solid #ccc;
+      margin: 10px;
+      line-height: 40px;
+    }
+    .more {
+      width: 80px;
+      height: 40px;
+      border: 1px solid red;
+      color: red;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 4px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <ul id="content">
+    <li>内容1</li>
+    <li>内容2</li>
+  </ul>
+  <div class="more">加载更多</div>
+
+
+  <script type="text/javascript">
+    var btnMore = document.querySelector('.more');
+    btnMore.addEventListener('click', function(){
+         ctn = document.querySelector('#content');
+         lis = ctn.querySelectorAll('li');//ctn和lis在函数内没有声明，是全局变量，但在该函数内赋值，每点击一次就进行一次赋值，目的是为了得到点击后的li的个数，从而把个数作为参数传递给后台
+         ajax({url: '/comment', type: 'get',});   
+    });
+
+      function ajax(opts){
+         var xhr = new XMLHttpRequest();
+         var url_send ='length='+ lis.length
+            xhr.open(opts.type,opts.url+'?'+url_send,true);
+            xhr.send();
+        xhr.onreadystatechange = function(){
+           if (xhr.readyState === 4 && xhr.status === 200){
+            //从后台拿到数据，把数据放到创建后的标签里，再推到ul里面
+                for(var i=0;i<6;i++){
+                    var newLi = document.createElement('li');
+                    newLi.innerHTML = JSON.parse(xhr.response)[i];
+                    ctn.appendChild(newLi);
+                    } 
+            }else if(xhr.status === 404){
+               console.log('出错了')  
+           }};
+   }
+
+  </script>
+</body>
+</html>
