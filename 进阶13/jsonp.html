@@ -36,7 +36,6 @@
         var box = document.querySelector('.box')
         var check = document.querySelector('.check');
         var body = document.querySelector('body');
-        var imgShow = document.querySelector('.image');
         var layout = document.querySelector('.layout'); 
 
         check.addEventListener('click',append);
@@ -71,7 +70,6 @@
           var songName = obj.song[0].title;
           var artist = obj.song[0].artist;
           downLoadUrl = obj.song[0].url;
-          console.log(songName);
           box.innerText = songName+'——'+artist;
         }
 
