@@ -40,15 +40,17 @@
         var layout = document.querySelector('.layout'); 
 
         check.addEventListener('click',append);
-        downLoad.addEventListener('click',function(e){
-          if(box.innerText===''){
+        downLoad.addEventListener('click',function(){
+          if(box.innerText===''|| box.innerText === '请先查看要下载的歌曲'){
             box.innerText = '请先查看要下载的歌曲';
             box.style.color = "red";
 
           }else{
             window.location.href= downLoadUrl;
           }  
-            e.stopPropagation();
+        })
+        downLoad.addEventListener('click',function(e){
+              e.stopPropagation();
         })
         window.addEventListener('click',function(){
              box.innerText = '';
