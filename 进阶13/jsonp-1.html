@@ -1,104 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+  <meta charset="UTF-8">
+  <title>Document</title>
 </head>
 <body>
-<<<<<<< HEAD
-	
-	<div class="box">
-		<div class="city"></div>
-		<div class="weather"></div>
-		<button class="btn">点击</button>
-	</div>
+  
+  <div class="box">
+    <div class="city"></div>
+    <div class="weather"></div>
+    <button class="btn">点击</button>
+  </div>
 <script type="text/javascript">
-	var city = document.querySelector('.city');
-	var btn = document.querySelector('.btn');
-	var weather = document.querySelector('.weather');
-	var box = document.querySelector('.box');
-	var body = document.querySelector('body')
+  var city = document.querySelector('.city');
+  var btn = document.querySelector('.btn');
+  var weather = document.querySelector('.weather');
+  var box = document.querySelector('.box');
+  var body = document.querySelector('body')
 
-	btn.addEventListener('click', function(e){
-		var oScript=document.createElement('script');
-		oScript.src='http://jirenguapi.applinzi.com/weather.php?callback=getCity'
-		document.head.appendChild(oScript);
-		document.head.removeChild(oScript);
-	})
-	box.addEventListener('click',function(e){
-		e.stopPropagation()
-	})
-	window.addEventListener('click',function(e){
-			city.innerText = '';
-			weather.innerText = '';
-			e.stopPropagation();
+  btn.addEventListener('click', function(e){
+    var oScript=document.createElement('script');
+    oScript.src='http://jirenguapi.applinzi.com/weather.php?callback=getCity'
+    document.head.appendChild(oScript);
+    document.head.removeChild(oScript);
+  })
+  box.addEventListener('click',function(e){
+    e.stopPropagation()
+  })
+  window.addEventListener('click',function(e){
+      city.innerText = '';
+      weather.innerText = '';
+      e.stopPropagation();
 
 
-	})
+  })
 
-	function getCity(obj){
-		if(obj.status === 'success'){
-			city.innerHTML=obj.results[0].currentCity;
-			weather.innerText = obj.date;
-		}else{
-			city.innerHTML = '出错了'
-	}}
+  function getCity(obj){
+    if(obj.status === 'success'){
+      city.innerHTML=obj.results[0].currentCity;
+      weather.innerText = obj.date;
+    }else{
+      city.innerHTML = '出错了'
+  }}
 </script>
 
 </body>
 </html>
-=======
-    <div class="layout">
-         <div class="box"></div>
-         <button class='check'>随机查看歌曲</button>
-         <button class="btn">下载歌曲</button>
-    </div>
-    <script type="text/javascript">
-        var downLoad = document.querySelector('.btn');
-        var box = document.querySelector('.box')
-        var check = document.querySelector('.check');
-        var body = document.querySelector('body');
-        var layout = document.querySelector('.layout'); 
-
-        check.addEventListener('click',append);
-        downLoad.addEventListener('click',function(){
-          if(box.innerText==='' || box.innerText === '请先查看要下载的歌曲'){
-            box.innerText = '请先查看要下载的歌曲';
-            box.style.color = "red";
-
-          }else{
-            window.location.href= downLoadUrl;
-          }  
-            
-        })
-        downLoad.addEventListener('click',function(e){
-              e.stopPropagation();
-        })       
-        window.addEventListener('click',function(e){
-             box.innerText = '';
-             box.style.color = "";
-           
-        })
-
-      
-        function append(){
-              scrNode = document.createElement('script');
-              scrNode.src = 'http://api.jirengu.com/fm/getSong.php?channel=4&callback=getSong';
-              body.appendChild(scrNode);
-              body.removeChild(scrNode);
-              console.log(scrNode);
-        }
-
-        function getSong(obj){
-          var songName = obj.song[0].title;            
-          var artist = obj.song[0].artist;
-          downLoadUrl = obj.song[0].url;
-          box.innerHTML = songName+'——'+artist;
-        }
-
-    </script>
-</body>
-</html>
-
-
->>>>>>> de39acf6ff8454888b9503fad8b37f73166a0ed1
