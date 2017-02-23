@@ -63,6 +63,7 @@
               scrNode = document.createElement('script');
               scrNode.src = 'http://api.jirengu.com/fm/getSong.php?channel=4&callback=getSong';
               body.appendChild(scrNode);
+              body.removeChild(scrNode);
               console.log(scrNode);
         }
 
