@@ -40,25 +40,25 @@
 
         check.addEventListener('click',append);
         downLoad.addEventListener('click',function(){
-          if(box.innerText===''|| box.innerText === '请先查看要下载的歌曲'){
+          if(box.innerText==='' || box.innerText === '请先查看要下载的歌曲'){
             box.innerText = '请先查看要下载的歌曲';
             box.style.color = "red";
 
           }else{
             window.location.href= downLoadUrl;
           }  
+            
         })
         downLoad.addEventListener('click',function(e){
               e.stopPropagation();
-        })
-        window.addEventListener('click',function(){
+        })       
+        window.addEventListener('click',function(e){
              box.innerText = '';
              box.style.color = "";
+           
         })
+
       
-
-
-
         function append(){
               scrNode = document.createElement('script');
               scrNode.src = 'http://api.jirengu.com/fm/getSong.php?channel=4&callback=getSong';
@@ -68,7 +68,7 @@
         }
 
         function getSong(obj){
-          var songName = obj.song[0].title;
+          var songName = obj.song[0].title;            
           var artist = obj.song[0].artist;
           downLoadUrl = obj.song[0].url;
           box.innerText = songName+'——'+artist;
@@ -77,4 +77,5 @@
     </script>
 </body>
 </html>
+
 
