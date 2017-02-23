@@ -1,79 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>进阶13-jsonp</title>
-  <style type="text/css">
-
-    .layout {
-      padding-top: 50px;
-      width: 487px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .box {
-      border-bottom: 1px solid #ccc;
-      width: 250px;
-      height: 19px;
-
-    }
-    .box2 {
-        color: red;
-    }
-  </style>
+	<meta charset="UTF-8">
+	<title>Document</title>
 </head>
 <body>
-    <div class="layout">
-         <div class="box"></div>
-         <button class='check'>随机查看歌曲</button>
-         <button class="btn">下载歌曲</button>
-    </div>
-    <script type="text/javascript">
-        var downLoad = document.querySelector('.btn');
-        var box = document.querySelector('.box')
-        var check = document.querySelector('.check');
-        var body = document.querySelector('body');
-        var imgShow = document.querySelector('.image');
-        var layout = document.querySelector('.layout'); 
+	
+	<div class="box">
+		<div class="city"></div>
+		<div class="weather"></div>
+		<button class="btn">点击</button>
+	</div>
+<script type="text/javascript">
+	var city = document.querySelector('.city');
+	var btn = document.querySelector('.btn');
+	var weather = document.querySelector('.weather');
+	var box = document.querySelector('.box');
+	var body = document.querySelector('body')
 
-        check.addEventListener('click',append);
-        downLoad.addEventListener('click',function(e){
-          if(box.innerText===''){
-            box.innerText = '请先查看要下载的歌曲';
-            box.style.color = "red";
-
-          }else{
-            window.location.href= downLoadUrl;
-          }  
-            e.stopPropagation();
-        })
-        window.addEventListener('click',function(){
-             box.innerText = '';
-             box.style.color = "";
-        })
-      
+	btn.addEventListener('click', function(e){
+		var oScript=document.createElement('script');
+		oScript.src='http://jirenguapi.applinzi.com/weather.php?callback=getCity'
+		document.head.appendChild(oScript);
+		document.head.removeChild(oScript);
+	})
+	box.addEventListener('click',function(e){
+		e.stopPropagation()
+	})
+	window.addEventListener('click',function(e){
+			city.innerText = '';
+			weather.innerText = '';
+			e.stopPropagation();
 
 
+	})
 
-        function append(){
-              scrNode = document.createElement('script');
-              scrNode.src = 'http://api.jirengu.com/fm/getSong.php?channel=4&callback=getSong';
-              body.appendChild(scrNode);
-              console.log(scrNode);
-        }
+	function getCity(obj){
+		if(obj.status === 'success'){
+			city.innerHTML=obj.results[0].currentCity;
+			weather.innerText = obj.date;
+		}else{
+			city.innerHTML = '出错了'
+	}}
+</script>
 
-        function getSong(obj){
-          var songName = obj.song[0].title;
-          var artist = obj.song[0].artist;
-          downLoadUrl = obj.song[0].url;
-          console.log(songName);
-          box.innerText = songName+'——'+artist;
-        }
-
-    </script>
 </body>
 </html>
-
