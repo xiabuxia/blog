@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进阶13-降域b</title>
+	<style type="text/css">
+		.box {
+			width: 400px;
+			height: 500px;
+			border: 1px solid;
+			text-align: center;
+			margin-top: -8px;
+		}
+		#input {
+			margin-top: 70px;
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<input id="input" type="text" placeholder="http://b.xbx.com:8080/b.html">
+	</div>
+	<script type="text/javascript">
+		$('#input').addEventListener('input',function(){
+			window.parent.postMessage(this.value,'*');
+
+		});
+		window.addEventListener('message',function(e){
+			$('#input').value = e.data;
+		})
+		function $(id){
+			return document.querySelector(id);
+		}
+	</script>
+
+	
+</body>
+</html>

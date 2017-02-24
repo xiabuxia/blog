@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进阶13-降域</title>
+	<style type="text/css">
+		.ct {
+			display: flex;
+		}
+		.main {
+			width: 400px;
+			height: 500px;
+			border: 1px solid;
+			text-align: center;
+			
+		}
+		iframe {
+			width: 500px;
+			height: 600px;
+
+		}
+	</style>
+</head>
+<body>
+	<div class="ct">
+		
+		<div class="main">
+			<h2>使用降域事项跨域</h2>
+			<input type="text" placeholder="http://a.xia.com:8080/a.html">
+		</div>
+		<iframe src="http://b.xbx.com:8080/b.html" frameborder="0" scrolling="no"></iframe>
+	</div>
+
+	<script type="text/javascript">
+		$('.main input').addEventListener('input',function(){
+
+			window.frames[0].postMessage(this.value,'http://b.xbx.com:8080/b.html');//相当于把this.value发到window.frames[0]（表示iframe产生的窗口）上
+		});
+		window.addEventListener('message',function(e){
+			$('.main input').value = e.data;
+		});
+
+		function $(id){
+			return document.querySelector(id);
+		}
+	</script>
+	
+</body>
+</html>
