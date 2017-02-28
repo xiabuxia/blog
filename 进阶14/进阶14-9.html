@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进阶14-9</title>
+	<style type="text/css">
+		ul,li,dl,dt,dd{
+			margin: 0;
+			padding: 0;
+		}
+		ul {
+			list-style: none;
+			
+			
+		}
+		.sidebar {
+			position: relative;
+		}
+		.side-nav {
+			width: 150px;
+		}
+		.side-nav li {
+			height: 30px;
+			background: #a70404;
+			border-bottom: .5px solid #b92626;
+			color: #fff;
+			line-height: 26px;
+			padding-left: 8px;
+			cursor: pointer;
+		}
+		.side-nav li span {
+			padding-left: 65px;
+		}
+		.flo{
+			border: 1px solid #ccc;	
+			display: none;			
+		}
+		.flo ul {
+			float: left;
+			margin: 0px 35px;
+
+		}
+		.flo ul li {
+			margin: 10px 0;
+			font-size: 14px;
+		}
+		.side-box1 {	
+			position: absolute;
+			left: 150px;
+			top: 0px;
+		}
+		.side-box2 {
+			position: absolute;
+			left: 150px;
+			top: 30px;
+		}
+		.side-box3 {
+			position: absolute;
+			left: 150px;
+			top: 60px;
+		}
+		.side-box4 {
+			position: absolute;
+			left: 150px;
+			top: 90px;
+		}
+		.side-box5 {
+			position: absolute;
+			left: 150px;
+			top: 120px;
+			
+		}
+	</style>
+</head>
+<body>
+	<div class="sidebar">
+		<ul class="side-nav">
+			<li>珠宝玉器<span>></span></li>
+			<li>珠宝玉器<span>></span></li>
+			<li>珠宝玉器<span>></span></li>
+			<li>珠宝玉器<span>></span></li>
+			<li>珠宝玉器<span>></span></li>
+		</ul>
+
+	<div class="side-box1 flo">
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+			<li>珍珠</li>
+		</ul>
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+			<li>珍珠</li>
+		</ul>	
+	</div>
+	<div class="side-box2 flo">
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+		</ul>
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+		</ul>	
+	</div>
+	<div class="side-box3 flo">
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+			<li>珍珠</li>
+		</ul>
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+			<li>珍珠</li>
+		</ul>	
+	</div>
+	<div class="side-box4 flo">
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+		</ul>
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+		</ul>	
+	</div>
+	<div class="side-box5 flo">
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+			<li>珍珠</li>
+		</ul>
+		<ul>
+			<li>钻石</li>
+			<li>玛瑙</li>
+			<li>珍珠</li>
+		</ul>	
+	</div>
+	</div>
+<script src="jquery-3.1.1.min.js"></script>
+<script type="text/javascript">
+	var $lis = $('.side-nav');
+	var $flo = $('.flo');
+	$lis.on('mouseover','li',function(){
+		$($flo[$(this).index()]).show()
+	})
+	$lis.on('mouseout','li',function(){
+		$($flo[$(this).index()]).hide()
+	})
+</script>
+</body>
+</html>
