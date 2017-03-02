@@ -107,7 +107,7 @@
 	</div>
 
 	
-	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+	<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 
 	<script type="text/javascript">
 		var $ipt = $('.ipt');
@@ -122,14 +122,14 @@
 			alert('您的输入为空')
 		}else{
 			
-			$.ajax({
-                type: 'get',
-                url: 'http://api.jirengu.com/weather.php',
-                data:{city:value},
-                dataType:'jsonp',
-		 jsonp:'callback',
-                jsonpCallback:'getCity'
-            })
+		$.ajax({
+			type: 'get',
+			url: 'http://api.jirengu.com/weather.php',
+			data:{city:value},
+			dataType:'jsonp',
+			jsonp:'callback',
+			jsonpCallback:'getCity'
+            	})
 		
             $weather.html('');
 		
