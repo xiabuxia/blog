@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进阶15-9</title>
+	<style type="text/css">
+		* {
+			margin: 0 ;
+			padding: 0;
+		}
+		ul {
+			list-style: none;
+		}
+		.layout {
+			width: 800px;
+			margin: 50px auto;
+			text-align: center;
+		}
+		.ct li {
+			width: 300px;
+			height: 400px;
+			float: left;
+		}
+		.weather {
+			border: 1px solid #ccc;
+			background: url(2.jpg);
+			background-size: contain;
+			box-shadow: -9px 7px 12px 2px #ccc;
+			position: relative;
+		}
+		.katong {
+			background: url(c.jpg) no-repeat;
+			background-size: contain;
+		}
+		.weather h2 {
+			margin-top: 50px;
+
+		}
+		.citySearch {
+			margin-left: 45px;
+			margin-top: 50px;
+			font-size: 20px;
+			height: 100px;
+		}
+		.citySearch input {
+			display: block;
+			margin-top: 30px;
+			margin-left: 18px;
+			height: 30px;
+			width: 180px;
+			font-size: 20px;
+			outline: none;
+			border-radius: 2px;
+		}
+		.citySearch span {
+			margin-left: -33px;
+		}
+		.return,.citySearch .btn {
+			display: block;
+			height: 30px;
+			width: 50px;
+			line-height: 30px;
+			border: 1px solid #ccc;
+			margin-left: 149px;
+			margin-top: 10px;
+			font-size: 16px;
+			background-color: #ececff;
+			cursor: pointer;
+			border-radius: 4px;
+		}
+		.return {
+			position: absolute;
+			bottom: 35px;
+			right: 55px;
+			display: none;
+		}
+		.weatherBox {
+			margin-top: 18px;
+			margin-left: -2px;
+			width: 288px;
+			height: 30px;
+			text-align: left;
+		}
+		.tips{
+			color: red;
+			margin-top: 100px;
+			margin-left: -30px;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="layout">
+		<ul class="ct">
+			<li class="weather">
+				<h2>天气查询</h2>
+				<div class="citySearch"><span>请输入要查询的城市哟</span>
+					<input type="text" placeholder="请输入..." class="ipt">
+					<div class="btn">确认</div>
+				</div>
+				<div class="return">返回</div>
+			</li>
+			<li class="katong"></li>
+		</ul>
+		</div>
+	</div>
+
+	
+	<script src="http://apps.bdimg.com/libs/jquery/1.9.1/jquery.js"></script>
+
+	<script type="text/javascript">
+		var $ipt = $('.ipt');
+		var $btn = $('.btn');
+		var $weather = $('.citySearch');
+		var $back = $('.return')
+		
+		$btn.on('click',function(){
+			var value=$(".ipt").val();
+			console.log(value)
+		if($ipt.val()===''){
+			alert('您的输入为空')
+		}else{
+			
+			$.ajax({
+                type: 'get',
+                url: 'http://api.jirengu.com/weather.php',
+                data:{city:value},
+                dataType:'jsonp',
+                jsonpCallback:'getCity'
+            })
+		
+            $weather.html('');
+		
+		}})
+		$back.on('click',function(){
+			 window.location.reload()
+		})
+
+
+
+
+
+
+
+
+		var time = ['今天：','明天：','后天：','大后天：']
+		function getCity(res){
+
+			$back.css('display','block')
+			if(res.error!==0){
+				$weather.html('<div class="tips">您输入的城市名不正确</div>')
+			}else{
+				var date = res.results[0].weather_data[0].date
+				var weathers = res.results[0].weather_data;
+				var temperature = res.results[0].weather_data[0].temperature
+				var html=''
+				$.each(weathers,function(index,obj){
+					html += "<div class='weatherBox'>"+time[index]+obj.temperature+ obj.weather+'<div>';
+					return html
+				})
+					$weather.html(html)	
+			  }
+			}
+		
+
+
+
+
+
+
+
+
+
+
+	</script>
+	
+</body>
+</html>

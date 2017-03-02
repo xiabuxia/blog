@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进阶15</title>
+</head>
+<body>
+	<div class="box1">dcds</div>
+	<div class="ct">
+		<div class="box">这里</div>2
+	</div>
+	<script src="../jquery-3.1.1.min.js"></script>
+	<script type="text/javascript">
+		var $node = $('.box1');
+		var $ct = $('.ct')
+		// $node.addClass('active');
+		// $node.removeClass('active');//添加和删除class
+
+		// $node.show();
+		// $node.hide();//展示,隐藏
+
+		//$node.prop({id:'active',src:'http://www.baidu.com',title:'jirengu'});
+		//$node.attr('data-src','ddd')
+		
+		//$ct.prepend($node)
+		//$ct.append($node)
+
+		//$node.remove()
+		// $node.empty()
+		//$ct.html(' <div class="btn"></div>')
+
+		//$node.css({width:"200px",height:"20px",border:"1px solid"})
+		$node.width();//不包括内边距宽度,仅包括内容
+		$node.height();//不包括内边距高度,仅包括内容
+		$node.innerWidth();//包括内容和内边距宽度
+		$node.innerHeight();//包括内容和内边距高度
+		$node.outerWidth();//包括内容,内边距,边框宽度
+		$node.outerHeight();//包括内容,内边距,边框高度
+		$node.outerHeight(true);//包括内容,内边距,边框,外边距高度
+		$node.outerWidth(true);//包括内容,内边距,边框,外边距宽度
+
+
+	</script>
+</body>
+</html>

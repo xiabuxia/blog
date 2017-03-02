@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>进阶15-7</title>
+	<style type="text/css">
+		.btn {
+			width: 100px;
+			height: 40px;
+			line-height: 40px;
+			border: 1px solid;
+			text-align: center;
+		}
+		.box2 {
+			position: fixed;
+			top: 50px;
+			left: 50%; 
+			margin-left: -140px;
+		}
+		.box2 {
+			display: inline-block;
+			width: 280px;
+			height: 50px;
+			line-height: 50px;
+			border: 1px solid;
+			font-size: 24px;	
+		}
+		.box3 {
+			width: 200px;
+			height: 300px;
+			border: 1px solid;
+			margin-top: 50px;
+		}
+		.ipt {
+			display: block;
+			margin-top: 50px;
+			border: 4px solid #ccc;
+			outline: none;
+		}
+		.season {
+			margin-top: 20px;
+		}
+		.box5 {
+			width: 100px;
+			height: 30px;
+			border: 1px solid;
+			line-height: 30px;
+			text-align: center;
+		}
+		.box6 {
+			height: 1000px;
+		}
+	</style>
+</head>
+<body>
+	<div class="btn">点击变色</div>
+	<div class="box1"></div>
+	<div class="box2">窗口垂直滚动距离:<span class="show"></span></div>
+	<div class="box3">当鼠标放置到$div 上，把$div 背景色改为红色，移出鼠标背景色变为白色</div>
+	<input type="text" value="边框变色" class="ipt">
+		<select class="season">  
+		  <option>春天</option>  
+		  <option>夏天</option>  
+		  <option>秋天</option>  
+		  <option>冬天</option>  
+		</select> 
+		<div class="box5"></div>
+		<div class="box6"></div>
+
+
+
+	<script src="../jquery-3.1.1.min.js"></script>
+	<script>
+
+
+	//当点击$btn 时，让 $btn 的背景色变为红色再变为蓝色
+	var $btn = $('.btn');
+	$btn.on('click',function(){
+		$(this).animate(0,function(){
+			$(this).css('background','red')
+		})
+		$(this).animate('100',function(){
+			$(this).css('background','blue')
+		})
+	})
+	//当窗口滚动时，获取垂直滚动距离
+	$(window).scroll(function(){
+		$('.show').text($(this).scrollTop()+'px')
+
+	})
+	//当鼠标放置到$div 上，把$div 背景色改为红色，移出鼠标背景色变为白色
+	$('.box3').on('mouseenter',function(){
+		$(this).css('background','red')
+	})
+	$('.box3').on('mouseleave',function(){
+		$(this).css('background','#fff')
+	})
+	//当鼠标激活 input 输入框时让输入框边框变为蓝色，当输入框内容改变时把输入框里的文字小写变为大写，当输入框失去焦点时去掉边框蓝色，控制台展示输入框里的文字
+	$('.ipt').focus(function(){
+
+		$(this).css('border-color','blue')
+		
+	})
+	$(".ipt").keypress(function(){
+		 $(this).keyup(function(){
+			$(this).val($(this).val().toUpperCase());
+		})		
+	});
+	
+	$('.ipt').focusout(function(){
+		$(this).css("border-color","#ccc")
+		console.log(this.value)
+	})
+	 	
+	
+
+	//当选择 select 后，获取用户选择的内容
+	$('.season').on('change',function(){
+		$('.box5').html($(this).val())
+	})
+
+	</script>
+	
+</body>
+</html>
