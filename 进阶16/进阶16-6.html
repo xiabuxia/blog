@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>进阶16-6</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            list-style: none;
+            max-width: 600px;
+        }
+        
+        .layout {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .clearfix:after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+        
+        .news li img {
+            width: 80px;
+            float: left;
+            margin-right: 10px;
+        }
+        
+        li {
+            margin-top: 20px;
+            max-height: 60px;
+            overflow: hidden;
+        }
+        
+        .clearfix p {
+            margin-top: 10px;
+            color: #aaa;
+        }
+        .load {
+            background: #ccc;
+            width: 100px;
+            height: 30px;
+            line-height:30px;
+            text-align: center;
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layout">
+        <ul class="news clearfix">
+            <li class="clearfix">
+                <img src="1.jpg" alt="">
+                <h3>特朗普连发四条推文 称在大选投票前遭奥巴马监听</h3>
+                <p>突发：特朗普在个人推特上连发四条推文称在大选投票前， 前总统奥巴马就已经监听了特朗普。特朗普称这就是水门事件的翻版。
+                </p>
+            </li>
+            <li class="clearfix">
+                <img src=" 2.jpg " alt=" ">
+                <h3>人类首次在培养皿中造出小鼠胚胎 可自主发育</h3>
+                <p>在生命最早之初，受精卵经过多次分化、分类，形成胚胎， 但在胚胎着床在母体子宫壁之前，早期胚胎经历着什么？ 这对人类来说，是个还未打开的黑箱，充满神秘。
+                </p>
+            </li>
+            <li class="clearfix">
+                <img src="3.jpg" alt="">
+                <h3>政协委员黄洁夫：有器官移植资质医院将“洗牌”</h3>
+                <p>3月4日上午，在全国政协十二届五次会议小组会议后， 全国政协委员、原卫生部副部长、现任中国人体器官捐献与移植委员会主任委员黄洁夫称， 对于现有163家有器官移植资质但不开展器官捐献的医院， 国家卫计委医政医管局将给出黄牌警告，一年内未开展器官捐献则直接吊销执照。
+                </p>
+            </li>
+        </ul>
+        <div class="load">加载更多</div>
+    </div>
+</body>
+<script src="jquery-3.1.1.min.js"></script>
+<script>
+     var pageIndex = 0;
+     var loadShowMore = false;
+     var loadGet = true;
+     getNews()
+     $(window).on('scroll',function(){
+         if(!loadShowMore && isShow($('.load')) && loadGet){
+             console.log("1")
+             getNews();
+         }
+     })
+
+     function getNews(){
+         loadGet = false;
+         $.get('/getNews', {page:pageIndex}).done(function(ret){
+             pageIndex ++;
+             loadGet = true;
+            
+             if(ret.status === 0 && ret.data.length !== 0){
+                var html = '';
+                console.log(ret)
+                $.each(ret.data,function(){
+                    html += '<li class="clearfix">';
+                    html +=     ' <img src="'+this.img+'">';
+                    html +=     '<h3>'+this.title+'</h3>';
+                    html +=     '<p>'+this.brif+'</p>';
+                    html += '</li>'
+                    $('.news').append(html)
+                })
+             }else {
+                 loadShowMore = true;
+                 $('.layout').append('<p>没有更多了</p>')
+                 
+             }
+            
+
+        })
+     }
+
+
+
+    function isShow($node){
+        var $windowHeight = $(window).height(),
+            $scrollTop = $(window).scrollTop(),
+            $nodeOffset = $node.offset().top,
+            $nodeHeight = $node.outerHeight(true);
+        if($windowHeight+$scrollTop > $nodeOffset && $scrollTop < $nodeHeight+$nodeOffset ){
+            return true;
+        }else{
+            return false;
+            
+        }
+    }
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>进阶16-5</title>
+    <style>
+        img {
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="timg.gif" data-src="r_1.png">
+    <img src="timg.gif" data-src="r_2.png">
+    <img src="timg.gif" data-src="r_3.png">
+    <img src="timg.gif" data-src="r_4.png">
+    <img src="timg.gif" data-src="1.jpg">
+    <img src="timg.gif" data-src="2.jpg">
+    <img src="timg.gif" data-src="3.jpg">
+    <img src="timg.gif" data-src="4.jpg">
+    <img src="timg.gif" data-src="5.jpg">
+    <img src="timg.gif" data-src="6-.jpg">
+
+
+    <script src="../../jquery-3.1.1.min.js"></script>
+    <script>
+        isShow()
+
+        $(window).on('scroll', function() {
+            console.log('scroll')
+            isShow()
+        })
+
+        function isShow() {
+            var windowHeight = $(window).height();
+            $('img').not('.load').each(function() {
+                var winScrollTop = $(window).scrollTop();
+                var imgOffsetTop = $(this).offset().top;
+                var imgHeight = $(this).outerHeight(true);
+                console.log('eash')
+                if (windowHeight + winScrollTop > imgOffsetTop && winScrollTop < imgHeight + imgOffsetTop) {
+                    var imgUrl = $(this).attr('data-src');
+                    $(this).attr('src', imgUrl);
+                    $(this).addClass('load')
+                    console.log('if')
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
