@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>进阶17-2</title>
+<style>
+
+    ul,li{
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    a {
+        text-decoration: none;
+    }
+    .clearfix:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
+    .carouse {
+        position: relative;
+        width: 300px;
+        height: 229px;
+        
+    }
+    .carouse .carouse-ct {
+        position: absolute;       
+    }
+    .carouse .carouse-ct li {
+        position: absolute;
+        display: none;
+
+   
+    }
+    .carouse-ct li a img {
+        width: 300px;
+       
+    }
+    .btn {
+        width: 30px;
+        height: 30px;
+        background-color: #9e0202;
+        opacity: 0.7;
+        border-radius: 50%;
+        color: #fff;
+        font-size: 20px;
+        line-height: 30px;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        margin-top: -15px;
+        cursor: pointer;
+    }
+    .pre-btn {
+        left: 10px;
+    }
+    .next-btn {
+        left: 259px;
+    }
+    .bullet-ct {
+        position: absolute;
+        width: 300px;
+        margin-top: 190px;
+        text-align: center;
+    }
+    .bullet-ct li {
+        width: 20px;
+        height: 6px;
+        background-color: #fff;
+        display: inline-block;
+        border-radius: 3px;
+        cursor: pointer;
+
+    }
+    .bullet-ct .active {
+        background-color: #bad2f0;
+    }
+
+</style>
+
+</head>
+<body>
+    <div class="carouse">
+        <ul class="carouse-ct clearfix">
+            <li data-index="0"><a href="javaScript:void[0]"><img src="9.jpg" alt="9.jpg"></a></li>
+            <li data-index="1"><a href="javaScript:void[0]"><img src="8.jpg" alt="8.jpg"></a></li>
+            <li data-index="2"><a href="javaScript:void[0]"><img src="4.jpg" alt="7.jpg"></a></li>
+            <li data-index="3"><a href="javaScript:void[0]"><img src="6.jpg" alt="6.jpg"></a></li>
+        </ul>
+        <div class="btn pre-btn">&lt</div>
+        <div class="btn next-btn">&gt</div>
+        <ul class="bullet-ct">
+            <li class="active"></li>
+            <li></li>
+            <li></li>
+            <li></li>
+
+        </ul>
+    </div>
+
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+        var $preBtn = $('.pre-btn'),
+            $nextBtn = $('.next-btn'),
+            $carouseCt = $('.carouse-ct'),
+            $img = $('.carouse-ct img'),
+            $bulletCt = $('.bullet-ct');
+
+
+            var pageIdx=0;
+            var lockAnimate = false;          
+
+            window.setInterval(function(){     
+                 play((pageIdx+1)%$img.length)
+            },2000)
+
+            $nextBtn.on("click",function(){
+                play((pageIdx+1)%$img.length)
+            })
+
+            $preBtn.on('click',function(){
+               play(($img.length+pageIdx-1)%$img.length)
+            })
+   
+            $bulletCt.on('click','li',function(){
+                play($(this).index())
+                bltAutoPlay()
+            })
+
+            play(0)
+           
+            function play(idx){
+                if(lockAnimate) return;
+                 lockAnimate = true;
+                 $carouseCt.children().eq(pageIdx).fadeOut(500)
+                 $carouseCt.children().eq(idx).fadeIn(500,function(){
+                     lockAnimate =false;
+                 });
+                 pageIdx=idx;
+                 bltAutoPlay()
+            }
+            // 淡入淡出使用的时候前提是让四张图片重叠
+            function bltAutoPlay(){
+                $bulletCt.children()
+                    .removeClass('active')
+                    .eq(pageIdx)
+                    .addClass('active') 
+            }
+
+           
+
+ 
+
+    </script>
+</body>
+</html>
