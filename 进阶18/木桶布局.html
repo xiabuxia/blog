@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>瀑布流</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        .img-preview {
+            width: 1000px;
+            margin: 0 auto;
+        }
+        .img-row {
+            margin-top: 5px;
+        }
+        .img-row:after {
+            content: '';
+            display: block;
+            clear: both;
+        }
+        .img-box {
+            float: left
+        }
+    </style>
+
+</head>
+<body>
+    <div class="img-preview">
+       
+    </div>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+
+
+
+        function Barrels($ct){
+            this.$ct = $ct;
+            this.rowList = [];
+            this.loadImg()
+
+        };
+
+        Barrels.prototype = {  
+            loadImg: function(){
+                var _this = this
+                var imgUrls = getImgUrls(50);
+                $.each(imgUrls,function(index,url){
+                    var img = new Image();
+                    img.src = url;
+                    
+                    img.onload = function(){
+                        var imgInfor = {
+                            target: img,
+                            width: 100*(img.width/img.height),
+                            height: 100
+                        }
+                     
+                         _this.render(imgInfor);
+                        
+                    }
+                })
+
+            },
+            render: function(imgInfor){
+                var clientWidth = this.$ct.width(); // 容器的宽度
+                var rowWidth = 0;
+                var newRowHeight = 0;
+                var newRowWidth 
+                var lastImgInfor = imgInfor;
+                this.rowList.push(imgInfor); // 把图片放到预先定义好的数组里面，再看里面宽度之后是否大于容器的宽度
+                
+                for(var i=0;i<this.rowList.length;i++){
+                    rowWidth += this.rowList[i].width;
+                    if(rowWidth>clientWidth){
+                        this.rowList.pop(); // 图片的宽度大于容器的宽度，则把数组最后的一张图片拿出来
+                        rowWidth = rowWidth - lastImgInfor.width;
+                        newRowHeight = clientWidth*100/rowWidth; // 确定了改行存放的图片之后，对图片的高度进行设置，以便刚好适应该行的宽度
+                        this.layout(imgInfor,newRowHeight); // 超出来的图片拿出来之后，进行html的摆放     
+                        this.rowList = []; // 图片摆放完之后把数组清空
+                       // console.log(this.rowList)
+                        this.rowList.push(imgInfor)  // 把最后一张图片重新放回去
+                    }
+                }
+           },
+           layout: function(imgInfor,newRowHeight){
+                var $rowCt = $('<div class="img-row"></div>');
+                $.each(this.rowList,function(index,imgInfor){
+                var $imgCt = $('<div class="img-box"></div>');
+                    $img = $(imgInfor.target);
+                   // console.log($img.height())
+                    $img.height(newRowHeight);
+                   // console.log($img.height()+'after')
+                    $imgCt.append($img);
+                    $rowCt.append($imgCt);
+
+                })
+                this.$ct.append($rowCt);
+
+           }
+        }
+
+
+        function getImgUrls(num){
+            var width,height,color,urls=[];
+            for(var i=0;i<num;i++){
+                width = parseInt(Math.random()*100+50);
+                height = parseInt(Math.random()*30+50);
+                color = Math.random().toString(16).substring(2,8);
+                urls.push("http://placehold.it/" + width + "x" + height + "/" + color + "/fff")
+            }
+            return urls
+        }
+       
+       var barrels = new Barrels($('.img-preview'));
+
+
+    </script>
+
+
+</body>
+</html>

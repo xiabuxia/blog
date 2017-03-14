@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>瀑布流</title>
+    <style>
+        .layout{
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+        }
+        ul,li {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .ct li {
+            width: 200px;
+            position: absolute;
+            transition: all 1s;
+        }
+        .img1 {
+            height: 200px;
+            background: pink;
+        }
+        .img2 {
+            height: 250px;
+            background: blue;
+        
+        }
+        .img3 {
+            height: 180px;
+            background: green;
+        }
+        .img4 {
+            height: 400px;
+            background: yellow;
+        }
+        .img5 {
+            height: 300px;
+            background: red;
+        }
+        .img6 {
+            height: 230px;
+            background: #ccc;
+        }
+        .img7 {
+            height: 420px;
+            background: #242454;
+        }
+        .img8 {
+            height: 330px;
+            background: #adadad;
+        }
+        .ct li {
+            margin: 5px;
+        }
+
+    </style>
+
+</head>
+<body>
+    <div class="layout">
+        <ul class="ct">
+            <li class="img1"></li>
+            <li class="img2"></li>
+            <li class="img3"></li>
+            <li class="img4"></li>
+            <li class="img5"></li>
+            <li class="img6"></li>
+            <li class="img7"></li>
+            <li class="img8"></li>
+            <li class="img1"></li>
+            <li class="img2"></li>
+            <li class="img3"></li>
+            <li class="img4"></li>
+            <li class="img5"></li>
+            <li class="img6"></li>
+            <li class="img7"></li>
+            <li class="img8"></li>
+            <li class="img1"></li>
+            <li class="img2"></li>
+            <li class="img3"></li>
+            <li class="img4"></li>
+            <li class="img5"></li>
+            <li class="img6"></li>
+            <li class="img7"></li>
+            <li class="img8"></li>
+        </ul>
+    </div>
+    <script src="jquery-3.1.1.min.js"></script>
+    <script>
+
+
+  
+    waterFull();
+   $(window).on('resize',function(){
+       waterFull();
+   })
+
+
+
+
+    function waterFull(){
+        var colLength = parseInt($('.layout').width()/$('li').outerWidth());
+        var itemArr=[];
+        for(var i=0;i<colLength;i++){
+            itemArr[i]=0;
+        }
+        
+
+        $('li').each(function(){
+            var minValue = Math.min.apply(null,itemArr);
+            var minIndex = itemArr.indexOf(minValue);
+            $(this).css({
+                top: itemArr[minIndex],
+                left: $(this).outerWidth(true)*minIndex
+            })
+            itemArr[minIndex] += $(this).outerHeight(true);
+        }) 
+    
+    }
+
+
+    </script>
+    
+</body>
+</html>
